@@ -5,5 +5,6 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 #include "api.h"
-inline auto Api = API();
+// ReSharper disable once CppNonInlineVariableDefinitionInHeaderFile
+auto Api = API();
 #endif

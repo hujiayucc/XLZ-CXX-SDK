@@ -5,7 +5,7 @@
 #ifndef CONSTANT_H
 #define CONSTANT_H
 // SDK版本
-constexpr const char* SDK_VERSION = "6.0.5";
+constexpr auto SDK_VERSION = "6.0.5";
 
 // 消息处理
 constexpr int32_t MSG_CONTINUE = 0; // 继续

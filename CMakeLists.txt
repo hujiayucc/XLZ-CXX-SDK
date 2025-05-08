@@ -4,7 +4,12 @@ project(main CXX)
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_CXX_STANDARD 17)
 
-add_library(main SHARED main.cpp)
+add_library(main SHARED main.cpp
+        src/api.cpp
+        src/appinfo.cpp
+        src/TextCode.cpp
+        src/MessageTools.cpp
+)
 add_executable(test test.cpp)
 
 target_include_directories(main PUBLIC "include")
