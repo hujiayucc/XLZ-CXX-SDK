@@ -15,7 +15,7 @@
  * @param default_value 当键不存在时返回的默认值
  * @return 配置内容
  */
-const char *ReadConfigItem(
+static const char *ReadConfigItem(
     const std::string &filename,
     const std::string &section,
     const std::string &key,
@@ -33,10 +33,18 @@ const char *ReadConfigItem(
  * - true  写入成功
  * - false 写入失败
  */
-bool WriteConfigItem(
+static bool WriteConfigItem(
     const std::string& filename,
     const std::string& section,
     const std::string& key,
     const std::string& value
 );
+
+/**
+ * 字符串比较
+ * @param s1 str1
+ * @param s2 str2
+ * @return 是否相等
+ */
+inline bool strequal(const char *s1, const char *s2);
 #endif
