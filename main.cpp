@@ -11,9 +11,10 @@
 #include <MessageTools.h>
 #include <utils.h>
 #include <windows.h>
+#include <nlohmann/json.hpp>
 
 XLZ const char *appload(const char *apidata, const char *pluginkey) {
-    Api.init(apidata, pluginkey);
+    Api.init(nlohmann::json::parse(gbk2utf8(apidata)), pluginkey);
     auto appInfo = ApplicationInfo();
     appInfo.SetAppName("C++ Sample Plugin");
     appInfo.SetAuthor("hujiayucc");
@@ -48,7 +49,7 @@ XLZ const char* GetPhoneVefCode(int64_t qq, const char *phone) {
 
 XLZ int32_t AppStart() {
     PLUGIN_DATA_DIR = Api.GetPluginDataDir();
-    MessageBox(nullptr, Api.GetPluginDataDir(), "测试", MB_OK);
+    // MessageBox(nullptr, Api.GetPluginDataDir(), "测试", MB_OK);
     // ReSharper disable once CppExpressionWithoutSideEffects
     Api.OutLog("日志输出测试");
     return ENABLE_RESPONSE_SUCCESS;
@@ -64,36 +65,32 @@ XLZ int32_t AppUnload() {
 
 XLZ int32_t ControlPanel() {
     try {
-        char *endPtr;
-        char *endPtr2;
         const char *test = ReadConfigItem(
             std::string(PLUGIN_DATA_DIR) + "test.ini",
             "Test", "number", "0"
         );
         const bool test2 = WriteConfigItem(
             std::string(PLUGIN_DATA_DIR) + "test.ini",
-            "Test", "number", std::to_string(strtol(test, &endPtr, 10) + 1)
+            "Test", "number", std::to_string(str2ll(test) + 1)
         );
         const char *test3 = ReadConfigItem(
             std::string(PLUGIN_DATA_DIR) + "测试.ini",
-            "Test", "number", "0"
+            "测试", "测试", "0"
         );
         const bool test4 = WriteConfigItem(
             std::string(PLUGIN_DATA_DIR) + "测试.ini",
-            "测试", "次数", std::to_string(strtol(test3, &endPtr2, 10) + 1)
+            "测试", "测试", std::to_string(str2ll(test3) + 1)
         );
         if (test2 && test4) {
             MessageBox(nullptr, "配置写入成功", "提示", MB_OK);
         } else {
             MessageBox(nullptr, "配置写入失败", "提示", MB_OK);
         }
-
-        // ReSharper disable once CppExpressionWithoutSideEffects
+        /** 红包测试
         Api.GroupExclusiveRedPacket(BOT_QQ, 1, 1, GROUP_ID, "2792607647", "C++插件测试", false, PAY_PASSWD);
-        // ReSharper disable once CppExpressionWithoutSideEffects
         Api.GroupVoiceRedPacket(BOT_QQ, 1, 1, GROUP_ID, "测试", PAY_PASSWD);
-        // ReSharper disable once CppExpressionWithoutSideEffects
         Api.GroupLuckyRedPacket(BOT_QQ, 1, 1, GROUP_ID, "测试", PAY_PASSWD);
+        */
     } catch (std::exception &e) {
         MessageBox(nullptr, (std::string("发生错误\n") + e.what()).c_str(), "错误提示", MB_OK);
     }

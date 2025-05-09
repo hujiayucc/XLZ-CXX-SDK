@@ -6,6 +6,7 @@
 #define UTILS_H
 
 #include <string>
+
 /**
  * @brief 读取配置项
  *
@@ -47,4 +48,25 @@ bool WriteConfigItem(
  * @return 是否相等
  */
 bool strequal(const char *s1, const char *s2);
+
+/**
+ * 字符串转数字
+ * @param num numberText
+ * @return 数字
+ */
+int64_t str2ll(const char *num);
+
+/**
+ * 字符串转数字
+ * @param num numberText
+ * @return 数字
+ */
+int64_t str2ll(const std::string &num);
+
+/**
+ * gb2312_to_utf8
+ * @param gbk gbk
+ * @return utf8
+ */
+std::string gbk2utf8(const std::string& gbk);
 #endif

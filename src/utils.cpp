@@ -41,3 +41,27 @@ bool WriteConfigItem(
 bool strequal(const char *s1, const char *s2) {
     return strcmp(s1, s2) == 0;
 }
+
+int64_t str2ll(const char *num) {
+    char *endPtr;
+    return _strtoi64(num, &endPtr, 10);
+}
+
+int64_t str2ll(const std::string &num) {
+    return str2ll(num.c_str());
+}
+
+std::string gbk2utf8(const std::string& gbk) {
+    int len = MultiByteToWideChar(CP_ACP, 0, gbk.c_str(), -1, nullptr, 0);
+    auto* wstr = new wchar_t[len];
+    MultiByteToWideChar(CP_ACP, 0, gbk.c_str(), -1, wstr, len);
+
+    len = WideCharToMultiByte(CP_UTF8, 0, wstr, -1, nullptr, 0, nullptr, nullptr);
+    auto utf8_str = new char[len];
+    WideCharToMultiByte(CP_UTF8, 0, wstr, -1, utf8_str, len, nullptr, nullptr);
+
+    std::string result(utf8_str);
+    delete[] wstr;
+    delete[] utf8_str;
+    return result;
+}

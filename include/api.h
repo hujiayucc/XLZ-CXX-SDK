@@ -10,52 +10,11 @@
 #include <data.h>
 #include <optional>
 #include <stdexcept>
+#include <nlohmann/json.hpp>
 
 class API {
     std::string pluginkey;
-    std::string apidata;
-
-    /**
-     * @brief 不区分大小写的字符比较
-     * @param a 第一个字符
-     * @param b 第二个字符
-     * @return 是否相等（忽略大小写）
-     */
-    static bool ichar_equals(char a, char b);
-
-    /**
-     * @brief 安全查找子字符串位置
-     * @param haystack 主文本
-     * @param needle 查找文本
-     * @param start 起始位置
-     * @param caseSensitive 是否区分大小写
-     * @return 找到的位置或std::string::nos
-     */
-    static size_t safe_find(const std::string &haystack, const std::string &needle, size_t start, bool caseSensitive);
-
-    /**
-     * @brief 提取两个标记之间的文本
-     * @param source 源文本
-     * @param front 前导标记（支持#quote转义）
-     * @param back 后缀标记（支持#quote转义）
-     * @param startPos 起始搜索位置（默认0）
-     * @param caseSensitive 是否区分大小写（默认true）
-     * @return 提取到的中间文本，失败返回空字符串
-     *
-     * @example
-     * std::string result = ExtractMiddleText(
-     *     "Hello <tag>World</tag>",
-     *     "<tag>",
-     *     "</tag>"
-     * ); // 返回 "World"
-     */
-    std::string ExtractMiddleText(
-        const std::string &source,
-        const std::string &front,
-        const std::string &back,
-        size_t startPos,
-        bool caseSensitive
-    );
+    nlohmann::json apidata;
 
     /**
      * @brief 获取API函数地址
@@ -67,9 +26,9 @@ class API {
 public:
     API() = default;
 
-    void init(std::string apidata, std::string pluginkey) {
+    void init(const nlohmann::json &apidata, std::string pluginkey) {
         this->pluginkey = std::move(pluginkey);
-        this->apidata = std::move(apidata);
+        this->apidata = apidata;
     }
 
     /**
