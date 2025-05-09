@@ -5,11 +5,10 @@
 #ifndef API_H
 #define API_H
 
-#include "func.h"
 #include <string>
 #include <algorithm>
+#include <data.h>
 #include <optional>
-#include <shlwapi.h>
 #include <stdexcept>
 
 class API {
@@ -63,7 +62,7 @@ class API {
      * @param functionName 目标函数名
      * @return 函数地址，失败返回0
      */
-    int GetFunctionAddress(const std::string &functionName) const;
+    [[nodiscard]] int GetFunctionAddress(const std::string &functionName) const;
 
 public:
     API() = default;
@@ -121,6 +120,98 @@ public:
     ) const;
 
     /** 取插件数据目录 */
-    const char *GetPluginDataDir() const;
+    [[nodiscard]] const char *GetPluginDataDir() const;
+
+    /** 框架重启 */
+    void rebootFamework() const;
+
+    /**
+     * 重载自身插件
+     * @param path 新文件路径
+     */
+    void reload(std::string path) const;
+
+    /**
+     * @brief QQ点赞
+     * @param fQq 框架QQ
+     * @param qq 对方QQ
+     * @return 点赞结果
+     */
+    [[nodiscard]] const char *QQLike(int64_t fQq, int64_t qq) const;
+
+    /**
+     * @brief 群聊拼手气红包
+     * @param fQq 框架QQ
+     * @param total 总数
+     * @param totalAmount 总金额，单位分
+     * @param group QQ群号
+     * @param bless 祝福语，支持emoji
+     * @param skinId 红包皮肤ID，1522光与夜之恋,1527代号:三国(打了一辈子仗),1525街霸:对决,1518代号:三国(俺送红包来了),1476天涯明月刀,1512一人之下。其他皮肤id自己找
+     * @param payPasswd 支付密码
+     * @param bankCard 银行卡序列。大于0时使用银行卡支付
+     * @param verInfo 验证码信息，银行卡支付时，若需要短信验证码，将在此传回验证码信息
+     * @return 红包发送结果
+     */
+    const char *GroupLuckyRedPacket(
+        int64_t fQq,
+        int32_t total,
+        int32_t totalAmount,
+        int64_t group,
+        const char *bless,
+        const char *payPasswd,
+        int32_t skinId = 0,
+        int32_t bankCard = 0,
+        const CaptchaInfo *verInfo = nullptr
+    ) const;
+
+    /**
+     * @brief 群聊语音红包
+     * @param fQq 框架QQ
+     * @param total 总数
+     * @param totalAmount 总金额，单位分
+     * @param group QQ群号
+     * @param voiceText 语音口令，支持emoji
+     * @param payPasswd 支付密码
+     * @param bankCard 银行卡序列。大于0时使用银行卡支付
+     * @param verInfo 验证码信息，银行卡支付时，若需要短信验证码，将在此传回验证码信息
+     * @return 红包发送结果
+     */
+    const char *GroupVoiceRedPacket(
+        int64_t fQq,
+        int32_t total,
+        int32_t totalAmount,
+        int64_t group,
+        const char *voiceText,
+        const char *payPasswd,
+        int32_t bankCard = 0,
+        const CaptchaInfo *verInfo = nullptr
+    ) const;
+
+    /**
+     * @brief 群聊专属红包
+     * @param fQq 框架QQ
+     * @param total 总数
+     * @param totalAmount 总金额，单位分
+     * @param group QQ群号
+     * @param qq 领取人QQ
+     * @param bless 祝福语，支持emoji
+     * @param sharing 是否均分
+     * @param payPasswd 支付密码
+     * @param bankCard 银行卡序列。大于0时使用银行卡支付
+     * @param verInfo 验证码信息，银行卡支付时，若需要短信验证码，将在此传回验证码信息
+     * @return 红包发送结果
+     */
+    const char *GroupExclusiveRedPacket(
+        int64_t fQq,
+        int32_t total,
+        int32_t totalAmount,
+        int64_t group,
+        const char *qq,
+        const char *bless,
+        bool sharing,
+        const char *payPasswd,
+        int32_t bankCard = 0,
+        const CaptchaInfo *verInfo = nullptr
+    ) const;
 };
 #endif

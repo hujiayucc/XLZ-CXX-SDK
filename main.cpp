@@ -7,10 +7,10 @@
 #include <appinfo.h>
 #include <constant.h>
 #include <global.h>
+#include <LocalConfig.h>
 #include <MessageTools.h>
+#include <utils.h>
 #include <windows.h>
-
-#include "utils.h"
 
 XLZ const char *appload(const char *apidata, const char *pluginkey) {
     Api.init(apidata, pluginkey);
@@ -49,6 +49,7 @@ XLZ const char* GetPhoneVefCode(int64_t qq, const char *phone) {
 XLZ int32_t AppStart() {
     PLUGIN_DATA_DIR = Api.GetPluginDataDir();
     MessageBox(nullptr, Api.GetPluginDataDir(), "测试", MB_OK);
+    // ReSharper disable once CppExpressionWithoutSideEffects
     Api.OutLog("日志输出测试");
     return ENABLE_RESPONSE_SUCCESS;
 }
@@ -86,6 +87,13 @@ XLZ int32_t ControlPanel() {
         } else {
             MessageBox(nullptr, "配置写入失败", "提示", MB_OK);
         }
+
+        // ReSharper disable once CppExpressionWithoutSideEffects
+        Api.GroupExclusiveRedPacket(BOT_QQ, 1, 1, GROUP_ID, "2792607647", "C++插件测试", false, PAY_PASSWD);
+        // ReSharper disable once CppExpressionWithoutSideEffects
+        Api.GroupVoiceRedPacket(BOT_QQ, 1, 1, GROUP_ID, "测试", PAY_PASSWD);
+        // ReSharper disable once CppExpressionWithoutSideEffects
+        Api.GroupLuckyRedPacket(BOT_QQ, 1, 1, GROUP_ID, "测试", PAY_PASSWD);
     } catch (std::exception &e) {
         MessageBox(nullptr, (std::string("发生错误\n") + e.what()).c_str(), "错误提示", MB_OK);
     }
@@ -96,6 +104,7 @@ XLZ int32_t OnPrivate(const int32_t data_ptr) {
     PrivateMessageData data{};
     MessageTools::ReadPrivateMessage(data_ptr, data);
     if (data.msgType == MSG_TYPE_FRIEND_NORMAL && data.senderQQ == 2792607647 && strequal(data.content, "C++ Test")) {
+        // ReSharper disable once CppExpressionWithoutSideEffects
         Api.OutLog(data.senderQQ == 2792607647 ? "True" : "False");
         Api.SendPrivateMessage(data.frameworkQQ, data.senderQQ, "C++模板插件已运行！\nC++ Sample Plugin Is Running!");
         return MSG_INTERCEPT;
@@ -107,12 +116,14 @@ XLZ int OnGroup(const int32_t data_ptr) {
     GroupMessageData data{};
     MessageTools::ReadGroupMessage(data_ptr, data);
     if (data.senderQQ == 2792607647 && strequal(data.content, "C++ Test")) {
+        // ReSharper disable once CppExpressionWithoutSideEffects
         Api.OutLog(data.senderQQ == 2792607647 ? "True" : "False");
         Api.SendGroupMessage(data.frameworkQQ, data.groupNumber, "C++模板插件已运行！\nC++ Sample Plugin Is Running!");
         return MSG_INTERCEPT;
     }
     return MSG_CONTINUE;
 }
+
 
 XLZ int32_t OnGuildPush(const int32_t data_ptr) {
     return MSG_CONTINUE; // #消息处理_忽略
