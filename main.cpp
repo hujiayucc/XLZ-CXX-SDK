@@ -11,6 +11,8 @@
 #include <MessageTools.h>
 #include <windows.h>
 
+#include "utils.h"
+
 XLZ const char *appload(const char *apidata, const char *pluginkey) {
     Api.init(apidata, pluginkey);
     auto appInfo = ApplicationInfo();
@@ -46,6 +48,8 @@ XLZ const char* GetPhoneVefCode(int64_t qq, const char *phone) {
 }
 
 XLZ int32_t AppStart() {
+    PLUGIN_DATA_DIR = Api.GetPluginDataDir();
+    MessageBox(nullptr, Api.GetPluginDataDir(), "测试", MB_OK);
     Api.OutLog("日志输出测试");
     return ENABLE_RESPONSE_SUCCESS;
 }
@@ -59,12 +63,38 @@ XLZ int32_t AppUnload() {
 }
 
 XLZ int32_t ControlPanel() {
-    MessageBox(nullptr, "菜单按钮测试", "提示", MB_OK);
+    try {
+        char *endPtr;
+        char *endPtr2;
+        const char *test = ReadConfigItem(
+            std::string(PLUGIN_DATA_DIR) + "test.ini",
+            "Test", "number", "0"
+        );
+        const bool test2 = WriteConfigItem(
+            std::string(PLUGIN_DATA_DIR) + "test.ini",
+            "Test", "number", std::to_string(strtol(test, &endPtr, 10) + 1)
+        );
+        const char *test3 = ReadConfigItem(
+            std::string(PLUGIN_DATA_DIR) + "测试.ini",
+            "Test", "number", "0"
+        );
+        const bool test4 = WriteConfigItem(
+            std::string(PLUGIN_DATA_DIR) + "测试.ini",
+            "测试", "次数", std::to_string(strtol(test3, &endPtr2, 10) + 1)
+        );
+        if (test2 && test4) {
+            MessageBox(nullptr, "配置写入成功", "提示", MB_OK);
+        } else {
+            MessageBox(nullptr, "配置写入失败", "提示", MB_OK);
+        }
+    } catch (std::exception &e) {
+        MessageBox(nullptr, (std::string("发生错误\n") + e.what()).c_str(), "错误提示", MB_OK);
+    }
     return 0;
 }
 
 XLZ int32_t OnPrivate(const int32_t data_ptr) {
-    PrivateMessageData data;
+    PrivateMessageData data{};
     MessageTools::ReadPrivateMessage(data_ptr, data);
     if (data.msgType == MSG_TYPE_FRIEND_NORMAL && data.senderQQ == 2792607647 && strcmp(data.content, "C++ Test") == 0) {
         Api.OutLog(data.senderQQ == 2792607647 ? "True" : "False");
@@ -75,7 +105,7 @@ XLZ int32_t OnPrivate(const int32_t data_ptr) {
 }
 
 XLZ int OnGroup(const int32_t data_ptr) {
-    GroupMessageData data;
+    GroupMessageData data{};
     MessageTools::ReadGroupMessage(data_ptr, data);
     if (data.senderQQ == 2792607647 && strcmp(data.content, "C++ Test") == 0) {
         Api.OutLog(data.senderQQ == 2792607647 ? "True" : "False");

@@ -119,5 +119,8 @@ public:
         int64_t *random = nullptr,
         int64_t *req = nullptr
     ) const;
+
+    /** 取插件数据目录 */
+    const char *GetPluginDataDir() const;
 };
 #endif

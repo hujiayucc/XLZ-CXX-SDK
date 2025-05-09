@@ -7,4 +7,7 @@
 #include "api.h"
 // ReSharper disable once CppNonInlineVariableDefinitionInHeaderFile
 auto Api = API();
+// ReSharper disable once CppNonInlineVariableDefinitionInHeaderFile
+/// 插件数据目录
+const char *PLUGIN_DATA_DIR;
 #endif

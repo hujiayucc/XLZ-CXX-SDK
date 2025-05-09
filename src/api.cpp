@@ -96,7 +96,7 @@ int API::GetFunctionAddress(const std::string &functionName) const {
     // 转换为整数地址
     char *endPtr;
 
-    return strtoul(addressStr.c_str(), &endPtr, 10);
+    return strtoul(addressStr.c_str(), &endPtr, 10); // NOLINT(*-narrowing-conversions)
 }
 
 const char *API::OutLog(
@@ -129,6 +129,15 @@ const char *API::SendGroupMessage(const int64_t fQq, const int64_t group, const 
     try {
         const auto func = reinterpret_cast<Func>(GetFunctionAddress("发送群消息"));
         return static_cast<char *>(func(pluginkey.c_str(), fQq, group, message, &random, &req));
+    } catch (std::exception &e) {
+        throw std::runtime_error(e.what());
+    }
+}
+
+const char *API::GetPluginDataDir() const {
+    try {
+        const auto func = reinterpret_cast<Func>(GetFunctionAddress("取插件数据目录"));
+        return static_cast<char *>(func(pluginkey.c_str()));
     } catch (std::exception &e) {
         throw std::runtime_error(e.what());
     }
