@@ -88,7 +88,7 @@ public:
      * 重载自身插件
      * @param path 新文件路径
      */
-    void reload(std::string path) const;
+    void reload(std::string path = "") const;
 
     /**
      * @brief QQ点赞

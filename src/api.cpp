@@ -63,7 +63,7 @@ void API::rebootFamework() const {
 }
 
 
-void API::reload(std::string path = "") const {
+void API::reload(std::string path) const {
     if (path.empty()) path = "empty";
     try {
         const auto func = reinterpret_cast<Func>(GetFunctionAddress("重载自身"));

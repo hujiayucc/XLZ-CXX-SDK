@@ -10,11 +10,9 @@
 
 const char *OutLog(
     const char *message,
-    const std::optional<int> textColor = std::nullopt,
-    const std::optional<int> bgColor = std::nullopt
+    [[maybe_unused]] const std::optional<int> textColor = std::nullopt,
+    [[maybe_unused]] const std::optional<int> bgColor = std::nullopt
 ) {
-    const int relTextColor = textColor.value_or(32768);
-    const int relBGColor = bgColor.value_or(16777215);
     printf("[%s] %s\n", "XLZ", message);
     return "success";
 }
@@ -43,9 +41,8 @@ int main()
 
     FreeLibrary(hModule);
 
-    auto text = "Hello World";
-    auto text2 = "Hello";
-    if (str_contains(text, text2)) {
+    const auto text = "Hello World";
+    if (const auto text2 = "Hello"; str_contains(text, text2)) {
         printf("Text contains text2\n");
     }
 
