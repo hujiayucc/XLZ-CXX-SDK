@@ -100,7 +100,7 @@ XLZ int32_t ControlPanel() {
 XLZ int32_t OnPrivate(const int32_t data_ptr) {
     PrivateMessageData data{};
     MessageTools::ReadPrivateMessage(data_ptr, data);
-    if (data.msgType == MSG_TYPE_FRIEND_NORMAL && data.senderQQ == 2792607647 && strequal(data.content, "C++ Test")) {
+    if (data.msgType == MSG_TYPE_FRIEND_NORMAL && data.senderQQ == 2792607647 && str_equal(data.content, "C++ Test")) {
         // ReSharper disable once CppExpressionWithoutSideEffects
         Api.OutLog(data.senderQQ == 2792607647 ? "True" : "False");
         Api.SendPrivateMessage(data.frameworkQQ, data.senderQQ, "C++模板插件已运行！\nC++ Sample Plugin Is Running!");
@@ -112,7 +112,7 @@ XLZ int32_t OnPrivate(const int32_t data_ptr) {
 XLZ int OnGroup(const int32_t data_ptr) {
     GroupMessageData data{};
     MessageTools::ReadGroupMessage(data_ptr, data);
-    if (data.senderQQ == 2792607647 && strequal(data.content, "C++ Test")) {
+    if (data.senderQQ == 2792607647 && str_equal(data.content, "C++ Test")) {
         // ReSharper disable once CppExpressionWithoutSideEffects
         Api.OutLog(data.senderQQ == 2792607647 ? "True" : "False");
         Api.SendGroupMessage(data.frameworkQQ, data.groupNumber, "C++模板插件已运行！\nC++ Sample Plugin Is Running!");

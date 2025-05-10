@@ -20,11 +20,18 @@ add_library(main SHARED main.cpp
         src/MessageTools.cpp
         src/utils.cpp
 )
-add_executable(test test.cpp)
+add_executable(test test.cpp
+        src/api.cpp
+        src/appinfo.cpp
+        src/TextCode.cpp
+        src/MessageTools.cpp
+        src/utils.cpp
+)
 
 target_include_directories(main PUBLIC "include")
 target_compile_definitions(main PUBLIC XLZ_EXPORTS)
 target_link_libraries(main PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(test PRIVATE main nlohmann_json::nlohmann_json)
 
 if(MSVC)
     # 除了MT其他都可以删除

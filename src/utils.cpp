@@ -38,7 +38,7 @@ bool WriteConfigItem(
     );
 }
 
-bool strequal(const char *s1, const char *s2) {
+bool str_equal(const char *s1, const char *s2) {
     return strcmp(s1, s2) == 0;
 }
 
@@ -64,4 +64,8 @@ std::string gbk2utf8(const std::string& gbk) {
     delete[] wstr;
     delete[] utf8_str;
     return result;
+}
+
+bool str_contains(const std::string& str1, const std::string& str2) {
+    return str1.find(str2) != std::string::npos;
 }

@@ -47,7 +47,7 @@ bool WriteConfigItem(
  * @param s2 str2
  * @return 是否相等
  */
-bool strequal(const char *s1, const char *s2);
+bool str_equal(const char *s1, const char *s2);
 
 /**
  * 字符串转数字
@@ -69,4 +69,12 @@ int64_t str2ll(const std::string &num);
  * @return utf8
  */
 std::string gbk2utf8(const std::string& gbk);
+
+/**
+ * 文字是否包含某段文字
+ * @param str1 被比较的字符串
+ * @param str2 被包含的字符串
+ * @return 是否包含
+ */
+bool str_contains(const std::string& str1, const std::string& str2);
 #endif
