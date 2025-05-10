@@ -66,19 +66,19 @@ XLZ int32_t AppUnload() {
 XLZ int32_t ControlPanel() {
     try {
         const char *test = ReadConfigItem(
-            std::string(PLUGIN_DATA_DIR) + "test.ini",
+            PLUGIN_DATA_DIR + "test.ini",
             "Test", "number", "0"
         );
         const bool test2 = WriteConfigItem(
-            std::string(PLUGIN_DATA_DIR) + "test.ini",
+            PLUGIN_DATA_DIR + "test.ini",
             "Test", "number", std::to_string(str2ll(test) + 1)
         );
         const char *test3 = ReadConfigItem(
-            std::string(PLUGIN_DATA_DIR) + "测试.ini",
+            PLUGIN_DATA_DIR + "测试.ini",
             "测试", "测试", "0"
         );
         const bool test4 = WriteConfigItem(
-            std::string(PLUGIN_DATA_DIR) + "测试.ini",
+            PLUGIN_DATA_DIR + "测试.ini",
             "测试", "测试", std::to_string(str2ll(test3) + 1)
         );
         if (test2 && test4) {
