@@ -69,3 +69,7 @@ std::string gbk2utf8(const std::string& gbk) {
 bool str_contains(const std::string& str1, const std::string& str2) {
     return str1.find(str2) != std::string::npos;
 }
+
+bool str_starts_with(const std::string& str1, const std::string& str2) {
+    return str1.size() >= str2.size() && str1.compare(0, str2.size(), str2) == 0;
+}

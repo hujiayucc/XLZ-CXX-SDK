@@ -42,7 +42,8 @@ bool WriteConfigItem(
 );
 
 /**
- * 字符串比较
+ * @brief 字符串比较
+ *
  * @param s1 str1
  * @param s2 str2
  * @return 是否相等
@@ -50,31 +51,44 @@ bool WriteConfigItem(
 bool str_equal(const char *s1, const char *s2);
 
 /**
- * 字符串转数字
+ * @brief 字符串转数字
+ *
  * @param num numberText
  * @return 数字
  */
 int64_t str2ll(const char *num);
 
 /**
- * 字符串转数字
+ * @brief 字符串转数字
+ *
  * @param num numberText
  * @return 数字
  */
 int64_t str2ll(const std::string &num);
 
 /**
- * gb2312_to_utf8
+ * @brief gbk_to_utf8
+ *
  * @param gbk gbk
  * @return utf8
  */
 std::string gbk2utf8(const std::string& gbk);
 
 /**
- * 文字是否包含某段文字
+ * @brief 文字是否包含某段文字
+ *
  * @param str1 被比较的字符串
  * @param str2 被包含的字符串
  * @return 是否包含
  */
 bool str_contains(const std::string& str1, const std::string& str2);
+
+/**
+ * @brief 是否以某段字符串开头
+ *
+ * @param str1 被比较的字符串
+ * @param str2 开头字符串
+ * @return 是否以某段字符串开头
+ */
+bool str_starts_with(const std::string& str1, const std::string& str2);
 #endif
