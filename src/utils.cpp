@@ -58,7 +58,7 @@ std::string gbk2utf8(const std::string& gbk) {
     MultiByteToWideChar(CP_ACP, 0, gbk.c_str(), -1, wstr, len);
 
     len = WideCharToMultiByte(CP_UTF8, 0, wstr, -1, nullptr, 0, nullptr, nullptr);
-    auto utf8_str = new char[len];
+    const auto utf8_str = new char[len];
     WideCharToMultiByte(CP_UTF8, 0, wstr, -1, utf8_str, len, nullptr, nullptr);
 
     std::string result(utf8_str);
@@ -78,7 +78,7 @@ bool str_starts_with(const std::string& str1, const std::string& str2) {
 std::string toLower(const std::string& s) {
     std::string result(s);
     std::transform(result.begin(), result.end(), result.begin(),
-                   [](unsigned char c) { return std::tolower(c); });
+                   [](const unsigned char c) { return std::tolower(c); });
     return result;
 }
 
@@ -107,7 +107,7 @@ std::string text_get_right(
     const size_t sub_len = replaced_substr.length();
 
     if (forward_search) {
-        size_t start = (start_pos == -1) ? 0 : static_cast<size_t>(start_pos - 1);
+        const size_t start = start_pos == -1 ? 0 : static_cast<size_t>(start_pos - 1);
         if (start >= str_len) return "";
 
         if (ignore_case) {
@@ -116,7 +116,7 @@ std::string text_get_right(
             found_pos = str.find(replaced_substr, start);
         }
     } else {
-        size_t start = (start_pos == -1) ? std::string::npos : static_cast<size_t>(start_pos - 1);
+        size_t start = start_pos == -1 ? std::string::npos : static_cast<size_t>(start_pos - 1);
         if (start != std::string::npos && start >= str_len) start = std::string::npos;
 
         if (ignore_case) {
