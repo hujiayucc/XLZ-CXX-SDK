@@ -91,4 +91,40 @@ bool str_contains(const std::string& str1, const std::string& str2);
  * @return 是否以某段字符串开头
  */
 bool str_starts_with(const std::string& str1, const std::string& str2);
+
+/**
+ * @brief 将字符串转换为小写
+ *
+ * @param s 字符串
+ * @return 转换后的字符串
+ */
+std::string toLower(const std::string& s);
+
+/**
+ * @brief 替换所有匹配的子串
+ *
+ * @param s 字符串
+ * @param from 要替换的子串
+ * @param to 替换为的子串
+ * @return 替换后的字符串
+ */
+void replaceAll(std::string& s, const std::string& from, const std::string& to);
+
+/**
+ * @brief 取文本中右边的子串
+ *
+ * @param str 文本
+ * @param substr 子串
+ * @param start_pos 开始位置
+ * @param ignore_case 是否忽略大小写
+ * @param forward_search 是否正向搜索
+ * @return
+ */
+std::string text_get_right(
+    const std::string& str,
+    const std::string& substr,
+    int start_pos = -1,
+    bool ignore_case = false,
+    bool forward_search = false
+);
 #endif

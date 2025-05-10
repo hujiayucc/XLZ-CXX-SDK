@@ -49,5 +49,11 @@ int main()
     if (str_equal(text, text)) {
         printf("Text equal text\n");
     }
+
+    if (str_starts_with(text, "Hello")) {
+        printf("Text starts with \"Hello\"\n");
+    }
+
+    printf("Text right of: %s", text_get_right("设置#66666", "设置#").c_str());
     return 0;
 }
