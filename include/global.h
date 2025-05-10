@@ -9,5 +9,5 @@
 auto Api = API();
 // ReSharper disable once CppNonInlineVariableDefinitionInHeaderFile
 /// 插件数据目录
-const char *PLUGIN_DATA_DIR;
+std::string PLUGIN_DATA_DIR;
 #endif
