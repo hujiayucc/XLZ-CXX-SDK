@@ -162,4 +162,13 @@ std::string text_get_left(
     bool ignore_case = false,
     bool forward_search = true
 );
+
+/**
+ * @brief 获取随机数
+ *
+ * @param min 最小值
+ * @param max 最大值
+ * @return 随机数
+ */
+int32_t GetRandom(int32_t min, int32_t max);
 #endif

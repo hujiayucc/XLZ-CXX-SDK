@@ -3,6 +3,7 @@
 //
 
 #include <algorithm>
+#include <random>
 #include <utils.h>
 #include <windows.h>
 
@@ -199,4 +200,10 @@ std::string text_get_left(
     }
 
     return str.substr(0, found_pos);
+}
+
+int32_t GetRandom(const int32_t min, const int32_t max) {
+    thread_local std::mt19937 gen(std::random_device{}());
+    std::uniform_int_distribution distrib(min, max);
+    return distrib(gen);
 }
