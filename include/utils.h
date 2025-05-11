@@ -127,4 +127,39 @@ std::string text_get_right(
     bool ignore_case = false,
     bool forward_search = false
 );
+
+/**
+ * @brief 替换子串标记
+ *
+ * @param s 源字符串
+ */
+void replaceSubstrMark(std::string& s);
+
+/**
+ * @brief 安全的起始位置
+ *
+ * @param start_pos 起始位置
+ * @param str_len 字符串长度
+ * @param forward 是否正向搜索
+ * @return 安全的起始位置
+ */
+size_t safeStartPos(int start_pos, size_t str_len, bool forward);
+
+/**
+ * @brief 取文本中左边的子串
+ *
+ * @param str 源字符串
+ * @param substr 子串
+ * @param start_pos 起始位置
+ * @param ignore_case 是否忽略大小写
+ * @param forward_search 是否正向搜索
+ * @return 获取的子串
+ */
+std::string text_get_left(
+    const std::string& str,
+    const std::string& substr,
+    int start_pos = -1,
+    bool ignore_case = false,
+    bool forward_search = true
+);
 #endif

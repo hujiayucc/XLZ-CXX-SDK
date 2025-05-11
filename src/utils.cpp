@@ -132,3 +132,71 @@ std::string text_get_right(
 
     return str.substr(found_pos + sub_len);
 }
+
+void replaceSubstrMark(std::string& s) {
+    size_t pos = 0;
+    const std::string from = "#引号";
+    const std::string to = "\"";
+    while ((pos = s.find(from, pos)) != std::string::npos) {
+        s.replace(pos, from.length(), to);
+        pos += to.length();
+    }
+}
+
+size_t safeStartPos(const int start_pos, const size_t str_len, const bool forward) {
+    if (start_pos == -1) {
+        return forward ? 0 : std::string::npos;
+    }
+    const auto pos = static_cast<size_t>(start_pos - 1);
+    return pos >= str_len ? (forward ? str_len : std::string::npos) : pos;
+}
+
+std::string text_get_left(
+    const std::string& str,
+    const std::string& substr,
+    const int start_pos,
+    const bool ignore_case,
+    const bool forward_search
+) {
+    std::string processed_sub = substr;
+    replaceSubstrMark(processed_sub);
+    if (processed_sub.empty()) return str; // 空子串返回原字符串
+
+    const size_t str_len = str.length();
+    if (const size_t sub_len = processed_sub.length(); str_len == 0 || sub_len > str_len) return "";
+
+    const size_t start = safeStartPos(start_pos, str_len, forward_search);
+
+    size_t found_pos;
+    if (forward_search) {
+        if (ignore_case) {
+            std::string lower_str(str);
+            std::transform(lower_str.begin(), lower_str.end(), lower_str.begin(),
+                          [](const unsigned char c) { return std::tolower(c); });
+            std::string lower_sub(processed_sub);
+            std::transform(lower_sub.begin(), lower_sub.end(), lower_sub.begin(),
+                          [](const unsigned char c) { return std::tolower(c); });
+            found_pos = lower_str.find(lower_sub, start);
+        } else {
+            found_pos = str.find(processed_sub, start);
+        }
+    } else {
+        if (ignore_case) {
+            std::string lower_str(str);
+            std::transform(lower_str.begin(), lower_str.end(), lower_str.begin(),
+                          [](const unsigned char c) { return std::tolower(c); });
+            std::string lower_sub(processed_sub);
+            std::transform(lower_sub.begin(), lower_sub.end(), lower_sub.begin(),
+                          [](const unsigned char c) { return std::tolower(c); });
+            found_pos = lower_str.rfind(lower_sub, start);
+        } else {
+            found_pos = str.rfind(processed_sub, start);
+        }
+    }
+
+    if (found_pos == std::string::npos) {
+        return str;
+    }
+
+    return str.substr(0, found_pos);
+}
