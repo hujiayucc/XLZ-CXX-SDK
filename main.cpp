@@ -14,7 +14,11 @@
 #include <nlohmann/json.hpp>
 
 XLZ const char *appload(const char *apidata, const char *pluginkey) {
-    Api.init(nlohmann::json::parse(gbk2utf8(apidata)), pluginkey);
+    try {
+        Api.init(nlohmann::json::parse(gbk2utf8(apidata)), pluginkey);
+    } catch (std::exception &e) {
+        MessageBox(nullptr, (std::string("发生错误\n") + e.what()).c_str(), "错误提示", MB_OK);
+    }
     auto appInfo = ApplicationInfo();
     appInfo.SetAppName("C++ Sample Plugin");
     appInfo.SetAuthor("hujiayucc");
