@@ -179,4 +179,13 @@ std::string text_get_left(
  * @return 随机数
  */
 int32_t GetRandom(int32_t min, int32_t max);
+
+/**
+ * @brief 分割字符串
+ *
+ * @param s 字符串
+ * @param delimiter 分割符
+ * @return 分割后的字符串
+ */
+std::vector<std::string> splitString(const std::string& s, char delimiter);
 #endif

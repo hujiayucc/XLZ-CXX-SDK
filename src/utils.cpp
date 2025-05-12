@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <random>
+#include <sstream>
 #include <utils.h>
 #include <windows.h>
 
@@ -221,4 +222,14 @@ int32_t GetRandom(const int32_t min, const int32_t max) {
     thread_local std::mt19937 gen(std::random_device{}());
     std::uniform_int_distribution distrib(min, max);
     return distrib(gen);
+}
+
+std::vector<std::string> splitString(const std::string& s, const char delimiter) {
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream tokenStream(s);
+    while (std::getline(tokenStream, token, delimiter)) {
+        tokens.push_back(token);
+    }
+    return tokens;
 }
