@@ -75,6 +75,14 @@ int64_t str2ll(const std::string &num);
 std::string gbk2utf8(const std::string& gbk);
 
 /**
+ * @brief utf8_to_utf8
+ *
+ * @param utf8 utf8
+ * @return gbk
+ */
+std::string utf82gbk(const std::string& utf8);
+
+/**
  * @brief 文字是否包含某段文字
  *
  * @param str1 被比较的字符串

@@ -68,6 +68,21 @@ std::string gbk2utf8(const std::string& gbk) {
     return result;
 }
 
+std::string utf82gbk(const std::string& utf8) {
+    int len = MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, nullptr, 0);
+    auto* wstr = new wchar_t[len];
+    MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, wstr, len);
+
+    len = WideCharToMultiByte(CP_ACP, 0, wstr, -1, nullptr, 0, nullptr, nullptr);
+    const auto utf8_str = new char[len];
+    WideCharToMultiByte(CP_ACP, 0, wstr, -1, utf8_str, len, nullptr, nullptr);
+
+    std::string result(utf8_str);
+    delete[] wstr;
+    delete[] utf8_str;
+    return result;
+}
+
 bool str_contains(const std::string& str1, const std::string& str2) {
     return str1.find(str2) != std::string::npos;
 }
